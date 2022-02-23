@@ -1,0 +1,149 @@
+---
+output: 
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+  number_sections: true
+ 
+title: "Creating Wordle in R" 
+author: "[User-764Q](https://github.com/User-764Q)"
+date: "`r paste0('Last Run: ', format(Sys.time(), '%A %d-%B-%Y'))`"
+params: 
+  param1: "Don't Forget about params"
+
+---
+
+<style>
+
+#TOC {
+ font-family: Calibri; 
+ font-size: 16px;
+ border-color: #3D68DF;
+ background: #3D68DF;
+}
+
+body {
+  font-family: Garamond;
+  font-size: 16px; 
+  border-color: #D0D0D0;
+  background-color: #D0D0D0;
+  color: #1A1A1A;
+}
+
+pre {
+  color: #1A1A1A
+  background: #D0D0D0;
+  background-color: #D0D0D0
+  font-family: Calibri; 
+  
+}
+
+</style>
+
+
+```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set(collapse = TRUE)
+
+knitr::opts_chunk$set(warning = FALSE)
+
+knitr::opts_chunk$set(message = FALSE)
+
+knitr::opts_chunk$set(include = TRUE)
+
+custom_black <- '1A1A1A'
+custom_white <- 'C0C0C0'
+custom_grey_dark <- '6F6F6F'
+custom_grey_light <- 'B2B2B2'
+custom_accent_blue <- '3D6BFF'
+
+```
+
+```{r libraries etc., message = FALSE }
+
+library(gmp)
+library(assertive)
+library(tidyverse)
+library(openxlsx)
+library(lubridate)
+library(data.table)
+library(crayon)
+
+```
+
+### Parameters    
+
+```{r dataload}
+
+Game_Word_Length = 2
+
+Game_Turns_Allowed = 2
+
+```
+
+# Creating Word List for Wordle
+
+### Data Source
+
+I found a list of all Enlish words on GitHub (here)[https://github.com/dwyl/english-words/blob/master/words_alpha.txt]. 
+
+```{r }
+
+raw_word_list <- read_csv('https://github.com/dwyl/english-words/blob/master/words_alpha.txt?raw=true', col_names = 'Word')
+
+```
+
+That list contains 370,102 Words of various lengths, all lower case. 
+
+Wordle is a 5 Letter Word Game so lets filter it to just 5 letter words.
+
+```{r}
+
+Words_x_letters <- raw_word_list %>%
+  filter(str_length(Word) == Game_Word_Length)
+
+```
+
+That list contains heaps of words I haven't heard of before so its gonna be a hard 
+game, but I can find a list later.
+
+### Is OK entry 
+
+```{r}
+
+
+
+```
+
+### Is a word function 
+
+```{r}
+
+
+
+```
+
+
+
+Making a function to check a candidate word against an answer. 
+
+Needs to take two inputs an answer word and a candidate word. 
+
+And return a data frame with two rows. 
+
+First row is the candidate word (forced to all lower case)
+
+Second row is a * if the letter is in the right place and right letter
++ if the letter is in the word and _ if the letter is not in the word at all. 
+
+
+```{r}
+
+
+
+```
+
+
