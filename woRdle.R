@@ -3,10 +3,9 @@ library(tidyverse)
 # Creating Word List for Wordle
 
 ### Data Source
+# https://www.keithv.com/software/wlist/ I used the highest quality word list I could find here 
 
-# I found a list of all Enlish words on GitHub (here)[https://github.com/dwyl/english-words/blob/master/words_alpha.txt]. 
-
-# raw_word_list <- read_csv('https://github.com/dwyl/english-words/blob/master/words_alpha.txt?raw=true', col_names = 'Word')
+raw_word_list <- read_csv('wlist_match12.txt', col_names = 'Word')
 
 Game_Word_Length <- 5
 
@@ -14,6 +13,8 @@ Game_Guess_Length <- 6
 
 Words_x_letters <- raw_word_list %>%
   filter(str_length(Word) == Game_Word_Length)
+
+solution_word <- sample(Words_x_letters$Word, size = 1)
 
 letter_splitter <- function(word) {unlist(strsplit(word, 
                                                    split = ""))}
@@ -130,7 +131,7 @@ take_a_guess <- function(guess_word = NULL) {
   n_Guesses <<- n_Guesses + 1
   
   if(n_Guesses > Game_Guess_Length) {
-    print(paste0('You Loose, Solution was ', 
+    print(paste0('You Lose, Solution was ', 
                  solution_word))
     break 
   }
@@ -142,3 +143,5 @@ take_a_guess <- function(guess_word = NULL) {
   result_data_frame[1:4]
   
 }
+
+
