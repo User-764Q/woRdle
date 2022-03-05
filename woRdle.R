@@ -14,6 +14,11 @@ Game_Guess_Length <- 6
 Words_x_letters <- raw_word_list %>%
   filter(str_length(Word) == Game_Word_Length)
 
+Words_5_letters <- raw_word_list %>%
+  filter(str_length(Word) == 5) %>%
+  mutate(word = str_to_lower(Word)) %>%
+  select(2)
+
 solution_word <- sample(Words_x_letters$Word, size = 1)
 
 letter_splitter <- function(word) {unlist(strsplit(word, 
@@ -142,6 +147,46 @@ take_a_guess <- function(guess_word = NULL) {
   
   result_data_frame[1:4]
   
+  
 }
+
+
+wordle_cheater <- function() {
+  
+  possibilities <- Words_5_letters
+  
+  green_letter_pattern <- readline('Enter Green Letters With Dots For The Other Letters,\n e.g. ".pple" or press enter to skip \n: ')
+  
+  possibilities_green_filtered <- possibilities %>%
+    filter(str_detect(word, green_letter_pattern))
+  
+  possibilities_green_filtered
+  
+  orange_letters <- readline('Enter all orange letters you have,\n e.g. "abk" or press enter to skip\n: ')
+  
+  orange_letters_split <- str_split(orange_letters, '')[[1]]
+  
+  possibilities_orange_filtered <- possibilities_green_filtered
+  
+  for (l in orange_letters_split) {
+    possibilities_orange_filtered <- possibilities_orange_filtered %>%
+      filter(str_detect(word, l))
+  }
+  
+  possibilities_grey_filtered <- possibilities_orange_filtered
+  
+  grey_letters <- readline('Enter all grey letters you have,\n e.g. "abk" or press enter to skip\n: ')
+  
+  grey_letters_split <- str_split(grey_letters, '')[[1]]
+  
+  for (l in grey_letters_split) {
+    possibilities_grey_filtered <- possibilities_grey_filtered %>%
+      filter(!str_detect(word, l))
+  }
+  
+  possibilities_grey_filtered
+  
+}
+
 
 
